@@ -4,18 +4,32 @@ for code-highlighting etc.
  */
                 pragma solidity ^0.7.0;
 
-                contract Greeter {
-                    string public greeting;
-
+                contract collectionTester {
+                    address owner;
+                    uint[] public numbers;
+                    mapping (address => uint) public accountBalance;
+                    address[] public knownAccounts;
+                    
                     constructor() public {
-                        greeting = 'Hello';
+                        owner = msg.sender;                        
+                    }
+                    // syntax variableName[key] = value
+                    function addAddress(address adr, uint amount) public {
+                        require(msg.sender == owner);
+                        accountBalance[adr] = amount;
+                        knownAccounts.push(adr);
+                        // mappings are not iterable in solidity
+                        //accountBalance.push(adr);
+                    }
+                    function howManyAddresses() view public returns (uint) {
+                        return knownAccounts.length;
+                    }
+                    function addNumberToArray(uint number) public {
+                        require(msg.sender == owner);
+                        numbers.push(number);
                     }
 
-                    function setGreeting(string memory _greeting) public {
-                        greeting = _greeting;
-                    }
-
-                    function greet() view public returns (string memory) {
-                        return greeting;
+                    function howManyNumbers() view public returns (uint) {
+                        return numbers.length;
                     }
                 }
