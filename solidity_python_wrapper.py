@@ -67,6 +67,7 @@ else:
 
 # load private account with private key
 # private key can be exported from metamask
+# INSERT PRIVATE KEY HERE
 priv_key = 'INSERT PRIVATE KEY HERE'
 metamask_account = w3.eth.account.from_key(priv_key)
 # check address, balance and current transaction count (=nonce)
@@ -113,13 +114,13 @@ tester_postDeployment = w3.eth.contract(
     address=tx_receipt.contractAddress,
     abi=abi
 )
-
-transRange = 5
+currentNonce = w3.eth.getTransactionCount(w3.eth.defaultAccount)
+transRange = 5000
 hexNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
 for x in range(transRange):
     # addNumberToArray Method
     addNumberTx = tester_postDeployment.functions.addNumberToArray(x).buildTransaction()    
-    addNumberTx['nonce'] = w3.eth.getTransactionCount(w3.eth.defaultAccount)    
+    addNumberTx['nonce'] = currentNonce + x*2    
     addNumberSigned = w3.eth.account.signTransaction(addNumberTx, metamask_account.privateKey)    
     antx_hash = w3.eth.sendRawTransaction(addNumberSigned.rawTransaction)
     # fire and forget -> no receipt
@@ -135,7 +136,7 @@ for x in range(transRange):
     print("random Address: " + address + ", amount: " + str(amount) +", current loop: " + str(x))
     address = Web3.toChecksumAddress(address)  
     addAddressTx = tester_postDeployment.functions.addAddress(address, amount).buildTransaction()    
-    addAddressTx['nonce'] = w3.eth.getTransactionCount(w3.eth.defaultAccount)    
+    addAddressTx['nonce'] = currentNonce + x*2 + 1   
     addAddressSigned = w3.eth.account.signTransaction(addAddressTx, metamask_account.privateKey)    
     aatx_hash = w3.eth.sendRawTransaction(addAddressSigned.rawTransaction)
     # fire and forget -> no receipt
