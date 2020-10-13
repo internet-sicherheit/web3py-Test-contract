@@ -71,5 +71,5 @@ to
 an here is an example output:  
 
 
-![example output](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "example output")
+![example output](https://github.com/internet-sicherheit/web3py-Test-contract/blob/master/output_smartcontract_test.png "example output")
 
