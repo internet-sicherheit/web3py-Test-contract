@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "~/.venv-py3/bin/python", 
+    //"/home/linuxbrew/.linuxbrew/bin/python3",
+    "python.autoComplete.extraPaths": [
+        "~/.venv-py3/bin/python"
+    ]
+}
