@@ -85,6 +85,17 @@ loop iterations the process got killed after 195326 iterations:
 The reason remains unknown at this point in time.
 Possible reasons that come to mind:
 - the python program ran out of memory
-- we discovered the limits of the EVM regarding the size of arrays (unlikely)
-- we discovered the limits of the EVM regarding the size of mappings (more likely)
-- something else
+- ~~we discovered the limits of the EVM regarding the size of arrays (unlikely)~~
+- ~~we discovered the limits of the EVM regarding the size of mappings (more likely)~~
+- ~~something else~~
+
+`journalctl --since yesterday | grep -i -C 5 oom` revealed that the os actually
+did shutdown the python process during the test.
+Monitoring the memory usage while running showed that the program started of with
+roughly 47mb:
+
+![memory initial](https://github.com/internet-sicherheit/web3py-Test-contract/blob/master/memory_1.png "memory initial")
+
+The memory usage increased with sporadic jumps to roughly 72mb after 1000 loop iterations:
+
+![memory later](https://github.com/internet-sicherheit/web3py-Test-contract/blob/master/memory_1000.png "memory later")
