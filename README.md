@@ -39,19 +39,20 @@ $ pip install --upgrade web3
 
 I also use the the EthereumTesterProvider which can be installed with:  
 `pip install -U web3[tester]`  
-The EthereumTesterProvider is not in use at the moment. So feel free to remove
-it from the source code if you don't feel like installing it.   
+The EthereumTesterProvider is in use at the moment. ~~So feel free to remove
+it from the source code if you don't feel like installing it.~~   
 And crucially the [Solidity Compiler](https://solidity.readthedocs.io/en/latest/installing-solidity.html#binary-packages)  
 Additional libraries: json, time, random
 
 *all of these need to be installed in the virtual environment.*  
 
+--------------
 In order to run the program you need an Ethereum Account which can be easily
 created and managed with [Metamask](https://metamask.io/).
 Then export your private key from your metamask account and insert it into the
 code at `priv_key = 'INSERT PRIVATE KEY HERE'`.   
 
-Lastly I created an Infura Project that provides an URL that the program connects with. 
+Lastly I created an Infura Project that provides an URL that the program connects with.
 Feel free to create your own [Infura Project](https://infura.io).
 Alternatively (in theory) this program should work just fine on bloxberg. For some
 reason it does not: The transactions are never confirmed.  
@@ -70,7 +71,20 @@ from `transRange = 5`
 to
 `transRange = *desired number*`
 
-an here is an example output:  
+And here is an example output:  
 
 
 ![example output](https://github.com/internet-sicherheit/web3py-Test-contract/blob/master/output_smartcontract_test.png "example output")
+
+###### Results
+After attempting to run the program on the EthereumTesterProvider with 1.000.000
+loop iterations the process got killed after 195326 iterations:
+
+![killed process](https://github.com/internet-sicherheit/web3py-Test-contract/blob/master/killed.png "killed process")
+
+The reason remains unknown at this point in time.
+Possible reasons that come to mind:
+- the python program ran out of memory
+- we discovered the limits of the EVM regarding the size of arrays (unlikely)
+- we discovered the limits of the EVM regarding the size of mappings (more likely)
+- something else
